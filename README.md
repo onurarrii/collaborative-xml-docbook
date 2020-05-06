@@ -1,2 +1,2 @@
-# Collaborative XML Docbook- Django
+# Collaborative XML Docbook, Ceng453
 
