@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title id="page_title">{{ doc_name }}</title>
+
+    <link rel="stylesheet" href="../../static/css/styles.css">
+    <link rel="stylesheet" href="../../static/css/document.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="notification"></div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li class="active" style="margin: 6px"><a href="/">Home</a></li>
+        </ul>
+        <div class="navbar-header" style="margin-left: 15px">
+            <a class="navbar-brand" id="doc_name">Document - {{ doc_name }}</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a>
+                    <form action="/api/delete/{{ dbdoc_id }}/" method="post" target="dummy" id="delete">
+                        {% csrf_token %}
+                        <input class="btn btn-danger" type="submit" value="Delete">
+                    </form>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <form action="/api/load/{{ dbdoc_id }}/" method="post" target="dummy" id="load">
+                        {% csrf_token %}
+                        <input class="btn btn-success" type="submit" value="Load">
+                    </form>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <form action="/api/save/{{ dbdoc_id }}/" method="post" target="dummy" id="save">
+                        {% csrf_token %}
+                        <input class="btn btn-primary" type="submit" value="Save">
+                        {{ form_save }}
+                    </form>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<pre>
+<div id="xml_content"></div>
+</pre>
+<iframe width="0" height="0" hidden name="dummy" id="dummy"></iframe>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <form action="/api/insert_child/{{ dbdoc_id }}/" method="post" id="insert_child" target="dummy">
+                {% csrf_token %}
+                {{ form_insert_child }}
+                <input class="btn btn-success node" type="submit" value="Insert Child">
+            </form>
+        </div>
+        <div class="col-sm-3">
+            <form action="/api/set_name/{{ dbdoc_id }}/" method="post" id="set_name" target="dummy">
+                {% csrf_token %}
+                {{ form_set_name }}
+                <input class="btn btn-warning" type="submit" value="Set Name">
+            </form>
+        </div>
+        <div class="col-sm-3">
+            <form action="/api/delete_element_by_id/{{ dbdoc_id }}/" method="post" id="delete_element_by_id"
+                  target="dummy">
+                {% csrf_token %}
+                {{ form_delete_element_by_id }}
+                <input style="margin-top:20px" class="btn btn-danger node" type="submit" value="Delete Element">
+            </form>
+        </div>
+        <div class="col-sm-3">
+            <form action="/api/delete_element_attribute/{{ dbdoc_id }}/" method="post" target="dummy"
+                  id="delete_element_attribute">
+                {% csrf_token %}
+                {{ form_delete_element_attribute }}
+                <input class="btn btn-danger node" type="submit" value="Delete Element Attribute">
+            </form>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <form action="/api/set_element_attr/{{ dbdoc_id }}/" method="post" target="dummy" id="set_element_attr">
+                {% csrf_token %}
+                {{ form_set_element_attr }}
+                <input class="btn btn-warning node" type="submit" value="Set Element Attribute">
+            </form>
+        </div>
+        <div class="col-sm-3">
+            <form action="/api/set_element_text/{{ dbdoc_id }}/" method="post" target="dummy" id="set_element_text">
+                {% csrf_token %}
+                {{ form_set_element_text }}
+                <input class="btn btn-warning node" type="submit" value="Set Element Text">
+            </form>
+        </div>
+        <div class="col-sm-3">
+            <form action="/api/insert_sibling/{{ dbdoc_id }}/" method="post" target="dummy" id="insert_sibling">
+                {% csrf_token %}
+                {{ form_insert_sibling }}
+                <input class="btn btn-success node" type="submit" value="Insert Sibling">
+            </form>
+        </div>
+        <div class="col-sm-3">
+            <form action="/api/insert_text/{{ dbdoc_id }}/" method="post" target="dummy" id="insert_text">
+                {% csrf_token %}
+                {{ form_insert_text }}
+                <input class="btn btn-success node" type="submit" value="Insert Text">
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<hr/>
+<input type="hidden" id="dbdocId" name="var" value="{{ dbdoc_id }}">
+<input type="hidden" id="sessionKey" name="var" value="{{ session_key }}">
+<script src="../../static/scripts/document.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="../../static/scripts/tree.jquery.js"></script>
+<link rel="stylesheet" href="../../static/css/jqtree.css">
+</body>
+</html>

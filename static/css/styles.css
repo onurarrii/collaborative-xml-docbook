@@ -1,0 +1,38 @@
+body {
+    height: 100%;
+    background: #15202b !important;
+}
+
+.message {
+    color:#D3D7DA !important;
+}
+
+.index-container {
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    margin-top: 40px !important;
+
+}
+
+.dropdown-toggle {
+    background: #D3D7DA !important;
+    color: #15202b !important;
+}
+
+.dropdown-menu > li > a:hover {
+    background: #D3D7DA !important;
+    cursor: pointer;
+}
+
+label {
+    color: #D3D7DA !important;
+}
+.col-md-4 {
+    padding: 0 !important;
+}

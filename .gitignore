@@ -1,0 +1,12 @@
+__pycache__/
+migrations/
+*.pyc
+.DS_Store
+.idea/
+envs/
+.idea
+venv/
+util/__pycache__/
+*.sqlite3
+migrations/
+collaborative_xml_docbook/__pycache__/

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index Page</title>
+    <link rel="stylesheet" href="../../static/css/styles.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container index-container">
+
+    {% if dirty_documents or clean_documents %}
+
+        <h2 class="h2 message">You can see all documents' list below.</h2>
+        <div class="btn-group dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Document
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                {% for doc in dirty_documents %}
+                    <li><a onclick="navigateById('{{ doc.id }}')">
+                        * {{ doc.name }} - {{ doc.id }}</a>
+                    </li>
+                {% endfor %}
+                {% for doc in clean_documents %}
+                    <li><a onclick="navigateById('{{ doc.id }}')">
+                        {{ doc.name }} - {{ doc.id }} </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form action="" style="margin: 15px" method="post" id="insert_child">
+        {% csrf_token %}
+        <input class="btn btn-success" type="submit" value="Create New Document">
+    </form>
+    {% if error %}
+        <div class="alert alert-danger">
+            <strong>Error Occured! </strong> {{ error }}
+        </div>
+    {% endif %}
+    <div class="col-md-4 col-md-offset-4">
+        <form action="/api/upload/" method="post" id="upload">
+            {% csrf_token %}
+            {{ form_upload }}
+            <input class="btn btn-success" type="submit" value="Upload Document">
+        </form>
+    </div>
+</div>
+
+<form id="form" hidden="true" method="POST">
+    {% csrf_token %}
+    <input id="input" type="submit">
+</form>
+<script src="../../static/scripts/index.js"></script>
+
+</body>
+</html>
